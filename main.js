@@ -8,35 +8,35 @@ const next = document.getElementById('next-img');
 
 const prev = document.getElementById('prev-img');
 // HTML内の#prev-imgを取得しprevに代入
+const addClass = function() {
+  images.item(count).classList.add('active');
+  // 表示されているページにactiveクラスをつける
+};
+
+const removeClass = function() {
+  images.item(imagesLength).classList.remove('active');
+  // 表示されていたページに付いていたactiveクラスを削除する
+};
+
+const countRemove = function() {
+  images.item(count).classList.remove('active');
+};
+
+let count = 0;
+let slideTimer = null;
 
 
-const slideImg = function(){
-  const addClass = function() {
-    images.item(count).classList.add('active');
-    // 表示されているページにactiveクラスをつける
-  };
+const slideImg = function() {
 
-  const removeClass =function () {
-    images.item(imagesLength).classList.remove('active');
-    // 表示されていたページに付いていたactiveクラスを削除する
-  };
-
-  const countRemove = function () {
-    images.item(count).classList.remove('active');
-  };
-
-  let count = 0;
-  let slideTimer = null;
-
-  const slideMotion = function(){
-    if (count >= imagesLength) {
+  const slideMotion = function() {
+    if(count >= imagesLength) {
       count = 0;
       addClass();
       removeClass();
       // countの数値がLengthよりも大きくなる場合、countの値を0に。
       // 1ページ目にactiveクラスをつける。
       // 最後のページに付いていたactiveクラスを削除する
-    }else {
+    } else {
       countRemove();
       count = count + 1;
       addClass();
@@ -46,7 +46,7 @@ const slideImg = function(){
     }
   }
 
-  const slider = function(){
+  const slider = function() {
     if(slideTimer == null) {
       slideTimer = setInterval(slideMotion, 5000);
       // 5秒間隔でtimer関数の処理を実施する
@@ -62,23 +62,22 @@ const slideImg = function(){
     // 再度timerCount関数を呼び出しタイマーを動作させる
   }
 
-  next.addEventListener('click', function () {
+  next.addEventListener('click', function() {
     slideMotion();
     resetTimer();
     // 右向きのボタンをクリックしたときに、slideMotion関数を呼び出す。
     // タイマーを一度とめて1秒からカウントをさせるためにresetTimer関数を呼び出す
   })
 
-  prev.addEventListener('click', function(){
-    if (count === 0) {
-      countRemove();
+  prev.addEventListener('click', function() {
+    countRemove();
+    if(count === 0) {
       images.item(imagesLength).classList.add('active');
       count = imagesLength;
       // 左向きのボタンをクリック時に、countの値が0の時は最初のページに付いているactiveクラスを削除
       // 最後のページにactiveクラスをつける
       // countに3を代入する
-    }else {
-      countRemove();
+    } else {
       count = count - 1;
       addClass();
       // countの値が0以外の時は現在表示されているページのactiveクラスを削除
